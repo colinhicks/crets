@@ -111,24 +111,24 @@
       "The field converter should ignore lookup fields"))
 
 (deftest end-to-end-search-example
-  (is (= {:listing-date #inst "2003-04-02T00:00:00.000-00:00",
-          :listing-agent-id "P345",
-          :listing-price 387117,
+  (is (= {:brokerage "Laffalot Realty",
           :elementary-school nil,
-          :square-footage "2026",
+          :exterior-features ["AGENT OWNER" "BURGLAR ALARM"],
+          :high-school nil,
+          :interior-features [],
+          :listing-agent-id "P345",
+          :listing-date #inst "2003-04-02T00:00:00.000-00:00",
+          :listing-id "demo.crt.realtors.org-100",
+          :listing-price 387117,
           :listing-type "RESIDENTIAL",
           :listing-url "http://demo.crt.realtors.org/retriever_po",
-          :listing-id "demo.crt.realtors.org-100",
-          :middle-school nil,
-          :brokerage "Laffalot Realty",
-          :interior-features [],
-          :status "Active",
-          :exterior-features ["AGENT OWNER" "BURGLAR ALARM"],
-          :zip-code 60134,
-          :street-name "Fourth St.",
           :location "Aurora",
+          :middle-school nil,
+          :square-footage "2026",
+          :status "Active",
+          :street-name "Fourth St.",
           :view nil,
-          :high-school nil}
+          :zip-code 60134}
          (let [spec (sut/search-spec "Property" "RES" "(query_ignored_here=1)")
                {:keys [resource-id class-id]} spec
                schema utils/compact-metadata
