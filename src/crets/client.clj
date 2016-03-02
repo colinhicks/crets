@@ -9,9 +9,11 @@
 
 ;; login
 
-(defn create-session [host version]
-  (doto (RetsSession. host (CommonsHttpClient.) version)
-    (.setMethod "POST")))
+(defn create-session
+  ([host] (create-session host RetsVersion/DEFAULT))
+  ([host version]
+   (doto (RetsSession. host (CommonsHttpClient.) version)
+     (.setMethod "POST"))))
 
 (defn authenticated? [session]
   (boolean (.getSessionId session)))
