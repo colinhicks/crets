@@ -40,7 +40,7 @@
                       str/lower-case
                       #(str/replace % #"_" "-")))
 
-(def fields-keywordize-xf (map (field-key-fn keywordize)))
+(def field-keywordize (map (field-key-fn keywordize)))
 
 (defn search-result->fields
   ([search-result]
@@ -62,9 +62,9 @@
                 nil
                 (timec/to-date (timef/parse (timef/formatters :date) %)))})
 
-(defn field-converter-xf
+(defn field-converter
   ([search-spec schema]
-   (field-converter-xf search-spec schema default-type-converters))
+   (field-converter search-spec schema default-type-converters))
   ([{:keys [resource-id class-id]} schema converters]
    (let [fields (ext/fields schema resource-id class-id)
          converter (memoize (fn [field-id]
@@ -76,7 +76,7 @@
      (map (field-value-fn #(or (converter %) identity))))))
 
 
-(defn field-lookup-resolver-xf [{:keys [resource-id class-id]} schema]
+(defn field-lookup-resolver [{:keys [resource-id class-id]} schema]
   (let [lookups (ext/lookups schema resource-id)
         fields (ext/fields schema resource-id class-id)
         resolver (memoize

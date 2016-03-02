@@ -77,14 +77,14 @@
 (deftest field-conversion
   (is (= [["LD" #inst "2003-04-02T00:00:00.000-00:00"]
           ["LP" 123456]] 
-         (-> (sut/field-converter-xf {:resource-id "Property" :class-id "RES"}
+         (-> (sut/field-converter {:resource-id "Property" :class-id "RES"}
                                      utils/compact-metadata)
              (transduce conj [["LD" "2003-04-02"]
                               ["LP" "123456"]]))))
 
   (is (= [["H_SCHOOL" "300"]
           ["LP" 123456]]
-         (-> (sut/field-converter-xf {:resource-id "Property" :class-id "RES"}
+         (-> (sut/field-converter {:resource-id "Property" :class-id "RES"}
                                      utils/compact-metadata)
              (transduce conj [["H_SCHOOL" "300" (comment :data-type int :lookup? true)]
                               ["LP" "123456"]])))
@@ -94,7 +94,7 @@
   (is (= [["STATUS" "Active"]
           ["EF" ["AGENT OWNER" "BURGLAR ALARM"]]
           ["IF" []]]
-         (-> (sut/field-lookup-resolver-xf {:resource-id "Property" :class-id "RES"}
+         (-> (sut/field-lookup-resolver {:resource-id "Property" :class-id "RES"}
                                            utils/compact-metadata)
              (transduce conj [["STATUS" "A"]
                               ["EF" "AO,BA"]
@@ -102,9 +102,9 @@
 
   (is (= [["H_SCHOOL" "Batavia 300"]
           ["LP" 123456]]
-         (-> (comp (sut/field-lookup-resolver-xf {:resource-id "Property" :class-id "RES"}
+         (-> (comp (sut/field-lookup-resolver {:resource-id "Property" :class-id "RES"}
                                                  utils/compact-metadata)
-                   (sut/field-converter-xf {:resource-id "Property" :class-id "RES"}
+                   (sut/field-converter {:resource-id "Property" :class-id "RES"}
                                            utils/compact-metadata))
              (transduce conj [["H_SCHOOL" "300" (comment :data-type int :lookup? true)]
                               ["LP" "123456"]])))
@@ -132,8 +132,8 @@
          (let [spec (sut/search-spec "Property" "RES" "(query_ignored_here=1)")
                {:keys [resource-id class-id]} spec
                schema utils/compact-metadata
-               convert-values (sut/field-converter-xf spec schema)
-               lookup-values (sut/field-lookup-resolver-xf spec schema)
+               convert-values (sut/field-converter spec schema)
+               lookup-values (sut/field-lookup-resolver spec schema)
                use-readable-keys (map (sut/field-key-fn
                                        #(-> (ext/field schema resource-id class-id %)
                                             :long-name
@@ -143,6 +143,6 @@
                   (sut/search-result->fields (comp convert-values
                                                    lookup-values
                                                    use-readable-keys
-                                                   sut/fields-keywordize-xf))
+                                                   sut/field-keywordize))
                   (map (partial into (sorted-map)))
                   first)))))
