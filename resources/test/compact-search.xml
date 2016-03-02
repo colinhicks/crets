@@ -1,0 +1,105 @@
+<RETS ReplyCode="0" ReplyText="Operation Successful">
+
+<DELIMITER value="9"/>
+<COLUMNS>	BROKER	LP	STNAME	STATUS	SQFT	VEW	LN	AGENT_ID	URL	IF	LTYP	AR	ZIP_CODE	LD	E_SCHOOL	M_SCHOOL	H_SCHOOL	EF	</COLUMNS>
+<DATA>	Laffalot Realty	387117	Fourth St.	A	2026	13	demo.crt.realtors.org-100	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60134	2003-04-02				AO,BA	</DATA>
+<DATA>	Laffalot Realty	237328	Main St.	P	3828	13	demo.crt.realtors.org-101	P123	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60134	2003-04-02				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	247010	Main St.	P	3470	13	demo.crt.realtors.org-102	M123	http://demo.crt.realtors.org/retriever_mo		RES	BATV	60174	2003-04-02				AO,BA	</DATA>
+<DATA>	Laffalot Realty	365540	Grandmas&apos;s Ln.	A	3443	13	demo.crt.realtors.org-103	P345	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60132	2003-04-02				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	441491	Randall Rd.	S	3443	13	demo.crt.realtors.org-104	A345	http://demo.crt.realtors.org/retriever_ao		RES	GENVA	60175	2003-04-02				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	382971	Anderson Blvd.	P	3880	13	demo.crt.realtors.org-105	A345	http://demo.crt.realtors.org/retriever_ao		RES	WYNE	60189	2003-04-03				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204484	Main St.	S	3378	13	demo.crt.realtors.org-106	A123	http://demo.crt.realtors.org/retriever_ao		RES	WCHIC	60189	2003-04-03				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	147780	Anderson Blvd.	A	3419	13	demo.crt.realtors.org-107	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60133	2003-04-03				AO,BA	</DATA>
+<DATA>	Laffalot Realty	296417	Anderson Blvd.	A	3590	13	demo.crt.realtors.org-108	P345	http://demo.crt.realtors.org/retriever_po		RES	STC	60133	2003-04-03				AO,BA	</DATA>
+<DATA>	Laffalot Realty	382024	Randall Rd.	A	3590	13	demo.crt.realtors.org-109	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60133	2003-04-03				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	168560	Third St.	A	2540	13	demo.crt.realtors.org-110	A345	http://demo.crt.realtors.org/retriever_ao		RES	SELGN	60175	2003-04-04				AO,BA	</DATA>
+<DATA>	Laffalot Realty	333792	Main St.	A	3452	13	demo.crt.realtors.org-111	P123	http://demo.crt.realtors.org/retriever_po		RES	SELGN	60175	2003-04-04				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204426	Randall Rd.	A	3880	13	demo.crt.realtors.org-112	A123	http://demo.crt.realtors.org/retriever_ao		RES	STC	60133	2003-04-04				AO,BA	</DATA>
+<DATA>	Laffalot Realty	416033	Anderson Blvd.	P	3470	13	demo.crt.realtors.org-113	P123	http://demo.crt.realtors.org/retriever_po		RES	STC	60175	2003-04-04				AO,BA	</DATA>
+<DATA>	Laffalot Realty	147780	Randall Rd.	A	2003	13	demo.crt.realtors.org-114	P123	http://demo.crt.realtors.org/retriever_po		RES	BATV	60133	2003-04-04				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	247010	Main St.	A	2031	13	demo.crt.realtors.org-115	A123	http://demo.crt.realtors.org/retriever_ao		RES	GENVA	60133	2003-04-05				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	494020	Chesterton Rd.	S	2801	13	demo.crt.realtors.org-116	A345	http://demo.crt.realtors.org/retriever_ao		RES	WYNE	60189	2003-04-05				AO,BA	</DATA>
+<DATA>	Laffalot Realty	347278	Main St.	P	2003	13	demo.crt.realtors.org-117	P345	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60189	2003-04-05				AO,BA	</DATA>
+<DATA>	Laffalot Realty	234299	Fourth St.	A	3281	13	demo.crt.realtors.org-118	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60182	2003-04-05				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	365540	Third St.	S	2961	13	demo.crt.realtors.org-119	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60134	2003-04-05				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	488462	Chesterton Rd.	A	3590	13	demo.crt.realtors.org-120	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60182	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	204484	Knoll Creek Dr.	A	2003	13	demo.crt.realtors.org-121	M345	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60133	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	494020	Main St.	A	2731	13	demo.crt.realtors.org-122	M123	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60132	2003-04-06				AO,BA	</DATA>
+<DATA>	Laffalot Realty	428048	Third St.	S	2731	13	demo.crt.realtors.org-123	P123	http://demo.crt.realtors.org/retriever_po		RES	SELGN	60133	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	294112	Anderson Blvd.	A	3828	13	demo.crt.realtors.org-124	M123	http://demo.crt.realtors.org/retriever_mo		RES	STC	60182	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	207920	Knoll Creek Dr.	A	2026	13	demo.crt.realtors.org-125	M123	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60175	2003-04-07				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	323650	Fourth St.	P	3378	13	demo.crt.realtors.org-126	M345	http://demo.crt.realtors.org/retriever_mo		RES	AUR	60133	2003-04-07				AO,BA	</DATA>
+<DATA>	Laffalot Realty	363184	Knoll Creek Dr.	A	3880	13	demo.crt.realtors.org-127	P123	http://demo.crt.realtors.org/retriever_po		RES	GENVA	60175	2003-04-07				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	180556	Randall Rd.	A	3443	13	demo.crt.realtors.org-128	A345	http://demo.crt.realtors.org/retriever_ao		RES	WYNE	60174	2003-04-07				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	347278	Anderson Blvd.	P	3880	13	demo.crt.realtors.org-129	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60132	2003-04-07				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	382971	Third St.	A	2003	13	demo.crt.realtors.org-130	M123	http://demo.crt.realtors.org/retriever_mo		RES	SELGN	60174	2003-04-08				AO,BA	</DATA>
+<DATA>	Laffalot Realty	372457	Randall Rd.	A	2961	13	demo.crt.realtors.org-131	P123	http://demo.crt.realtors.org/retriever_po		RES	WCHIC	60134	2003-04-08				AO,BA	</DATA>
+<DATA>	Laffalot Realty	378577	Main St.	A	3944	13	demo.crt.realtors.org-132	P123	http://demo.crt.realtors.org/retriever_po		RES	BATV	60182	2003-04-08				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	296417	Third St.	A	3470	13	demo.crt.realtors.org-133	A123	http://demo.crt.realtors.org/retriever_ao		RES	STC	60134	2003-04-08				AO,BA	</DATA>
+<DATA>	Laffalot Realty	179900	Third St.	S	3443	13	demo.crt.realtors.org-134	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60133	2003-04-08				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	353682	Knoll Creek Dr.	A	2078	13	demo.crt.realtors.org-135	M123	http://demo.crt.realtors.org/retriever_mo		RES	STC	60174	2003-04-09				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	353682	Anderson Blvd.	P	3053	13	demo.crt.realtors.org-136	M123	http://demo.crt.realtors.org/retriever_mo		RES	WYNE	60175	2003-04-09				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	363184	Knoll Creek Dr.	S	2078	13	demo.crt.realtors.org-137	A345	http://demo.crt.realtors.org/retriever_ao		RES	ELBRN	60134	2003-04-09				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204426	Randall Rd.	S	2026	13	demo.crt.realtors.org-138	A123	http://demo.crt.realtors.org/retriever_ao		RES	STC	60133	2003-04-09				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204426	Third St.	S	2003	13	demo.crt.realtors.org-139	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60182	2003-04-09				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	382971	Randall Rd.	P	2961	13	demo.crt.realtors.org-140	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60189	2003-04-10				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	372457	Third St.	A	3419	13	demo.crt.realtors.org-141	M123	http://demo.crt.realtors.org/retriever_mo		RES	STC	60189	2003-04-10				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	378577	Third St.	A	2540	13	demo.crt.realtors.org-142	M345	http://demo.crt.realtors.org/retriever_mo		RES	ELGN	60133	2003-04-10				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	248928	Fourth St.	S	2449	13	demo.crt.realtors.org-143	A345	http://demo.crt.realtors.org/retriever_ao		RES	GENVA	60133	2003-04-10				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	147780	Chesterton Rd.	A	3378	13	demo.crt.realtors.org-144	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60134	2003-04-10				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	243782	Third St.	A	3419	13	demo.crt.realtors.org-145	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60133	2003-04-11				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	204426	Anderson Blvd.	A	3470	13	demo.crt.realtors.org-146	M345	http://demo.crt.realtors.org/retriever_mo		RES	SELGN	60174	2003-04-11				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	207920	Knoll Creek Dr.	A	2026	13	demo.crt.realtors.org-147	A345	http://demo.crt.realtors.org/retriever_ao		RES	ELBRN	60134	2003-04-11				AO,BA	</DATA>
+<DATA>	Laffalot Realty	308661	Knoll Creek Dr.	A	3590	13	demo.crt.realtors.org-148	P345	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60134	2003-04-11				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	363184	Anderson Blvd.	A	3880	13	demo.crt.realtors.org-149	M345	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60132	2003-04-11				AO,BA	</DATA>
+<DATA>	Laffalot Realty	387117	Fourth St.	A	2026	13	demo.crt.realtors.org-100	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60134	2003-04-02				AO,BA	</DATA>
+<DATA>	Laffalot Realty	237328	Main St.	P	3828	13	demo.crt.realtors.org-101	P123	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60134	2003-04-02				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	247010	Main St.	P	3470	13	demo.crt.realtors.org-102	M123	http://demo.crt.realtors.org/retriever_mo		RES	BATV	60174	2003-04-02				AO,BA	</DATA>
+<DATA>	Laffalot Realty	365540	Grandmas&apos;s Ln.	A	3443	13	demo.crt.realtors.org-103	P345	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60132	2003-04-02				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	441491	Randall Rd.	S	3443	13	demo.crt.realtors.org-104	A345	http://demo.crt.realtors.org/retriever_ao		RES	GENVA	60175	2003-04-02				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	382971	Anderson Blvd.	P	3880	13	demo.crt.realtors.org-105	A345	http://demo.crt.realtors.org/retriever_ao		RES	WYNE	60189	2003-04-03				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204484	Main St.	S	3378	13	demo.crt.realtors.org-106	A123	http://demo.crt.realtors.org/retriever_ao		RES	WCHIC	60189	2003-04-03				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	147780	Anderson Blvd.	A	3419	13	demo.crt.realtors.org-107	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60133	2003-04-03				AO,BA	</DATA>
+<DATA>	Laffalot Realty	296417	Anderson Blvd.	A	3590	13	demo.crt.realtors.org-108	P345	http://demo.crt.realtors.org/retriever_po		RES	STC	60133	2003-04-03				AO,BA	</DATA>
+<DATA>	Laffalot Realty	382024	Randall Rd.	A	3590	13	demo.crt.realtors.org-109	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60133	2003-04-03				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	168560	Third St.	A	2540	13	demo.crt.realtors.org-110	A345	http://demo.crt.realtors.org/retriever_ao		RES	SELGN	60175	2003-04-04				AO,BA	</DATA>
+<DATA>	Laffalot Realty	333792	Main St.	A	3452	13	demo.crt.realtors.org-111	P123	http://demo.crt.realtors.org/retriever_po		RES	SELGN	60175	2003-04-04				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204426	Randall Rd.	A	3880	13	demo.crt.realtors.org-112	A123	http://demo.crt.realtors.org/retriever_ao		RES	STC	60133	2003-04-04				AO,BA	</DATA>
+<DATA>	Laffalot Realty	416033	Anderson Blvd.	P	3470	13	demo.crt.realtors.org-113	P123	http://demo.crt.realtors.org/retriever_po		RES	STC	60175	2003-04-04				AO,BA	</DATA>
+<DATA>	Laffalot Realty	147780	Randall Rd.	A	2003	13	demo.crt.realtors.org-114	P123	http://demo.crt.realtors.org/retriever_po		RES	BATV	60133	2003-04-04				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	247010	Main St.	A	2031	13	demo.crt.realtors.org-115	A123	http://demo.crt.realtors.org/retriever_ao		RES	GENVA	60133	2003-04-05				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	494020	Chesterton Rd.	S	2801	13	demo.crt.realtors.org-116	A345	http://demo.crt.realtors.org/retriever_ao		RES	WYNE	60189	2003-04-05				AO,BA	</DATA>
+<DATA>	Laffalot Realty	347278	Main St.	P	2003	13	demo.crt.realtors.org-117	P345	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60189	2003-04-05				AO,BA	</DATA>
+<DATA>	Laffalot Realty	234299	Fourth St.	A	3281	13	demo.crt.realtors.org-118	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60182	2003-04-05				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	365540	Third St.	S	2961	13	demo.crt.realtors.org-119	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60134	2003-04-05				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	488462	Chesterton Rd.	A	3590	13	demo.crt.realtors.org-120	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60182	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	204484	Knoll Creek Dr.	A	2003	13	demo.crt.realtors.org-121	M345	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60133	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	494020	Main St.	A	2731	13	demo.crt.realtors.org-122	M123	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60132	2003-04-06				AO,BA	</DATA>
+<DATA>	Laffalot Realty	428048	Third St.	S	2731	13	demo.crt.realtors.org-123	P123	http://demo.crt.realtors.org/retriever_po		RES	SELGN	60133	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	294112	Anderson Blvd.	A	3828	13	demo.crt.realtors.org-124	M123	http://demo.crt.realtors.org/retriever_mo		RES	STC	60182	2003-04-06				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	207920	Knoll Creek Dr.	A	2026	13	demo.crt.realtors.org-125	M123	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60175	2003-04-07				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	323650	Fourth St.	P	3378	13	demo.crt.realtors.org-126	M345	http://demo.crt.realtors.org/retriever_mo		RES	AUR	60133	2003-04-07				AO,BA	</DATA>
+<DATA>	Laffalot Realty	363184	Knoll Creek Dr.	A	3880	13	demo.crt.realtors.org-127	P123	http://demo.crt.realtors.org/retriever_po		RES	GENVA	60175	2003-04-07				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	180556	Randall Rd.	A	3443	13	demo.crt.realtors.org-128	A345	http://demo.crt.realtors.org/retriever_ao		RES	WYNE	60174	2003-04-07				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	347278	Anderson Blvd.	P	3880	13	demo.crt.realtors.org-129	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60132	2003-04-07				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	382971	Third St.	A	2003	13	demo.crt.realtors.org-130	M123	http://demo.crt.realtors.org/retriever_mo		RES	SELGN	60174	2003-04-08				AO,BA	</DATA>
+<DATA>	Laffalot Realty	372457	Randall Rd.	A	2961	13	demo.crt.realtors.org-131	P123	http://demo.crt.realtors.org/retriever_po		RES	WCHIC	60134	2003-04-08				AO,BA	</DATA>
+<DATA>	Laffalot Realty	378577	Main St.	A	3944	13	demo.crt.realtors.org-132	P123	http://demo.crt.realtors.org/retriever_po		RES	BATV	60182	2003-04-08				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	296417	Third St.	A	3470	13	demo.crt.realtors.org-133	A123	http://demo.crt.realtors.org/retriever_ao		RES	STC	60134	2003-04-08				AO,BA	</DATA>
+<DATA>	Laffalot Realty	179900	Third St.	S	3443	13	demo.crt.realtors.org-134	P345	http://demo.crt.realtors.org/retriever_po		RES	AUR	60133	2003-04-08				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	353682	Knoll Creek Dr.	A	2078	13	demo.crt.realtors.org-135	M123	http://demo.crt.realtors.org/retriever_mo		RES	STC	60174	2003-04-09				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	353682	Anderson Blvd.	P	3053	13	demo.crt.realtors.org-136	M123	http://demo.crt.realtors.org/retriever_mo		RES	WYNE	60175	2003-04-09				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	363184	Knoll Creek Dr.	S	2078	13	demo.crt.realtors.org-137	A345	http://demo.crt.realtors.org/retriever_ao		RES	ELBRN	60134	2003-04-09				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204426	Randall Rd.	S	2026	13	demo.crt.realtors.org-138	A123	http://demo.crt.realtors.org/retriever_ao		RES	STC	60133	2003-04-09				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	204426	Third St.	S	2003	13	demo.crt.realtors.org-139	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60182	2003-04-09				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	382971	Randall Rd.	P	2961	13	demo.crt.realtors.org-140	M345	http://demo.crt.realtors.org/retriever_mo		RES	STC	60189	2003-04-10				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	372457	Third St.	A	3419	13	demo.crt.realtors.org-141	M123	http://demo.crt.realtors.org/retriever_mo		RES	STC	60189	2003-04-10				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	378577	Third St.	A	2540	13	demo.crt.realtors.org-142	M345	http://demo.crt.realtors.org/retriever_mo		RES	ELGN	60133	2003-04-10				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	248928	Fourth St.	S	2449	13	demo.crt.realtors.org-143	A345	http://demo.crt.realtors.org/retriever_ao		RES	GENVA	60133	2003-04-10				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	147780	Chesterton Rd.	A	3378	13	demo.crt.realtors.org-144	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60134	2003-04-10				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	243782	Third St.	A	3419	13	demo.crt.realtors.org-145	A123	http://demo.crt.realtors.org/retriever_ao		RES	BATV	60133	2003-04-11				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	204426	Anderson Blvd.	A	3470	13	demo.crt.realtors.org-146	M345	http://demo.crt.realtors.org/retriever_mo		RES	SELGN	60174	2003-04-11				AO,BA	</DATA>
+<DATA>	Yellow Armadillo Realty	207920	Knoll Creek Dr.	A	2026	13	demo.crt.realtors.org-147	A345	http://demo.crt.realtors.org/retriever_ao		RES	ELBRN	60134	2003-04-11				AO,BA	</DATA>
+<DATA>	Laffalot Realty	308661	Knoll Creek Dr.	A	3590	13	demo.crt.realtors.org-148	P345	http://demo.crt.realtors.org/retriever_po		RES	ELGN	60134	2003-04-11				AO,BA	</DATA>
+<DATA>	Tex Mex Real Estate	363184	Anderson Blvd.	A	3880	13	demo.crt.realtors.org-149	M345	http://demo.crt.realtors.org/retriever_mo		RES	GENVA	60132	2003-04-11				AO,BA	</DATA>
+</RETS>

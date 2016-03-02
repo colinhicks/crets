@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<RETS ReplyCode="0" ReplyText="Success">
+  <METADATA>
+    <METADATA-SYSTEM Date="Fri, 7 Nov 2003 19:36:59 CST" Version="1.0.0">
+      <System>
+        <SystemID>CartTest</SystemID>
+        <Comments>
+          This is a comment
+        </Comments>
+        <METADATA-RESOURCE Version="1.0.0" Date="Fri, 7 Nov 2003 19:36:59 CST" System="CartTest">
+          <Resource>
+            <ResourceID>Property</ResourceID>
+            <ClassCount Type="INTEGER">1</ClassCount>
+            <ClassDate>Fri, 7 Nov 2003 19:36:59 CST</ClassDate>
+            <ClassVersion>1.0.0</ClassVersion>
+            <Description>Properties available</Description>
+            <EditMaskDate>
+              Fri, 7 Nov 2003 19:36:59 CST </EditMaskDate>
+            <EditMaskVersion>1.0.0</EditMaskVersion>
+            <KeyField>ListingID</KeyField>
+            <LookupDate>
+              Fri, 7 Nov 2003 19:36:59 CST </LookupDate>
+            <LookupVersion>1.0.0</LookupVersion>
+            <ObjectDate>
+              Fri, 7 Nov 2003 19:36:59 CST </ObjectDate>
+            <ObjectVersion>1.0.0</ObjectVersion>
+            <SearchHelpDate>
+              Fri, 7 Nov 2003 19:36:59 CST </SearchHelpDate>
+            <SearchHelpVersion>1.0.0</SearchHelpVersion>
+            <StandardName>Property</StandardName>
+            <UpdateHelpDate>
+              Fri, 7 Nov 2003 19:36:59 CST </UpdateHelpDate>
+            <UpdateHelpVersion> 1.0.0 </UpdateHelpVersion>
+            <ValidationExpressionDate>
+              Fri, 7 Nov 2003 19:36:59 CST </ValidationExpressionDate>
+            <ValidationExpressionVersion>1.0.0</ValidationExpressionVersion>
+            <ValidationExternalDate>
+              Fri, 7 Nov 2003 19:36:59 CST </ValidationExternalDate>
+            <ValidationExternalVersion>1.0.0</ValidationExternalVersion>
+            <ValidationLookupDate> Fri, 7 Nov 2003 19:36:59 CST </ValidationLookupDate>
+            <ValidationLookupVersion>1.0.0</ValidationLookupVersion>
+            <VisibleName>Property Database</VisibleName>
+            <METADATA-CLASS Resource="Property" Version="1.0.0" Date="Fri, 7 Nov 2003 19:36:59 CST">
+              <Class>
+                <ClassName>Residential</ClassName>
+                <Description>Residential properties</Description>
+                <TableDate>Fri, 7 Nov 2003 19:36:59 CST</TableDate>
+                <TableVersion>1.0.0</TableVersion>
+                <UpdateDate>
+                  Fri, 7 Nov 2003 19:36:59 CST </UpdateDate>
+                <UpdateVersion>1.0.0</UpdateVersion>
+                <VisibleName>Residential property</VisibleName>
+                <METADATA-TABLE Resource="Property" Class="Residential" Version="1.0.0" Date="Fri, 7 Nov 2003 19:36:59 CST">
+                  <Field>
+                    <SystemName>ListingID</SystemName>
+                    <StandardName>ListingID</StandardName>
+                    <DataType>Character</DataType>
+                    <Searchable>1</Searchable>
+                  </Field>
+                  <Field>
+                    <SystemName>Status</SystemName>
+                    <StandardName>Status</StandardName>
+                    <DataType>Character</DataType>
+                    <Interpretation>Lookup</Interpretation>
+                    <Searchable>1</Searchable>
+                  </Field>
+                  <Field>
+                    <SystemName>ListPrice</SystemName>
+                    <DataType>Decimal</DataType>
+                    <Interpretation>Currency</Interpretation>
+                    <Precision>2</Precision>
+                    <Searchable>1</Searchable>
+                  </Field>
+                  <Field>
+                    <SystemName>LD</SystemName>
+                    <StandardName>ListDate</StandardName>
+                    <LongName>Listing Date</LongName>
+                    <DBName>LD</DBName>
+                    <ShortName>Lst Dt</ShortName>
+                    <MaximumLength>12</MaximumLength>
+                    <DataType>Date</DataType>
+                    <Precision>0</Precision>
+                    <Searchable>1</Searchable>
+                    <Alignment>Left</Alignment>
+                    <UseSeparator>0</UseSeparator>
+                    <EditMaskID>DATE_EDITMASK</EditMaskID>
+                    <MaxSelect>0</MaxSelect>
+                    <SearchHelpID>DATE_SEARCH_HELP</SearchHelpID>
+                  </Field>
+
+                </METADATA-TABLE>
+              </Class>
+            </METADATA-CLASS>
+          </Resource>
+        </METADATA-RESOURCE>
+      </System>
+    </METADATA-SYSTEM>
+  </METADATA>
+</RETS>
