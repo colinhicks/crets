@@ -73,8 +73,7 @@
   SearchResult
   (values [obj]
     {:column-names (.getColumns obj)
-     :rows (iterator-seq (.iterator obj))
-     :total-count (.getCount obj)}))
+     :rows (iterator-seq (.iterator obj))}))
 
 
 ;; ISchema

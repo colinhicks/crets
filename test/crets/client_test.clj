@@ -1,6 +1,8 @@
 (ns crets.client-test
-  (:require [crets.client :as sut]
+  (:require [clojure.core.async :as async]
             [clojure.test :refer :all]
+            [crets.client :as sut]
+            [crets.extensions :refer [IValues]]
             [crets.test-utils :as utils]))
 
 (deftest authorizer-ensures-auth
@@ -54,3 +56,26 @@
   (is (not= (-> (utils/mock-session) (sut/fetch-search {:limit 1}) .values :rows first)
             (-> (utils/mock-session) (sut/fetch-search {:limit 1 :offset 1}) .values :rows first))))
 
+(deftest batch-search
+  (is (satisfies? IValues
+                  (let [out (async/chan)]
+                    (-> (utils/mock-session)
+                        (sut/batch-search-async {} out 100 1))
+                    (async/<!! out)))
+      "output channel should receive SearchResult (IValues) vals")
+
+  (is (= 10
+         (let [out (async/chan)
+               batches (do (-> (utils/mock-session)
+                               (sut/batch-search-async {:limit 50000} out 10 1))
+                           (async/<!! (async/into [] out)))]
+           (count batches))))
+
+  (is (= 5
+         (let [out (async/chan)
+               batches (do (-> (utils/mock-session)
+                               (sut/batch-search-async {:limit 50} out 10 1))
+                           (async/<!! (async/into [] out)))]
+           (count batches)))
+      "Batch searches should return a value on the out chan per run, until either 
+       1) the spec's limit is met, or 2) the server has no more results for the query"))

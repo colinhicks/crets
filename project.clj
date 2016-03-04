@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [clj-time "0.11.0"]
                  [galdolber/trulia-java-rets-client "1.0"]
-                 [instaparse "1.4.1"]])
+                 [instaparse "1.4.1"]
+                 [org.clojure/core.async "0.2.374"]])

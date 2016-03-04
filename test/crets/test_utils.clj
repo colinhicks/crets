@@ -36,6 +36,9 @@
         (map #(str/split % #"="))
         (map (fn [[k v]] [k (RetsUtil/urlDecode v)])))))
 
+(defprotocol IMockSearchResult
+  (getCount [this]))
+
 (defprotocol IMockSession
   (login [this user-id pass])
   (getSessionId [this])
@@ -62,7 +65,11 @@
                                 (map (fn [[k v]] [(-> k str/lower-case keyword)
                                                   (Integer/parseInt v)]))
                                 (into {}))]
-      (reify IValues
+      (reify
+        IMockSearchResult
+        (getCount [_]
+          (.getCount search-result))
+        IValues
         (values [_]
           {:column-names (.getColumns search-result)
            :total-count (.getCount search-result)

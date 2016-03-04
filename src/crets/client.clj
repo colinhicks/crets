@@ -5,7 +5,8 @@
             RetsVersion
             SearchRequest
             SearchResult])
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.core.async :as async]))
 
 ;; login
 
@@ -55,6 +56,26 @@
   (->> search-spec
        search-spec->request
        (.search session)))
+
+(defn batch-search-async [session search-spec out-ch batch-size parallelism]
+  (let [fetch-batch (fn [offset batch-ch]
+                          (async/go
+                            (let [search-spec' (assoc search-spec
+                                                      :include-count? false
+                                                      :limit batch-size
+                                                      :offset offset)
+                                  search-result (fetch-search session search-spec')]
+                              (async/put! batch-ch search-result)
+                              (async/close! batch-ch))))
+        fetch-peek (fn []
+                      (async/go
+                             (fetch-search session (assoc search-spec :count-only? true))))]
+    (async/go
+           (let [server-count (.getCount (async/<! (fetch-peek)))
+                 limit (min server-count (or (:limit search-spec) Integer/MAX_VALUE))
+                 batch-ch (async/chan)]
+             (async/onto-chan batch-ch (range 0 limit batch-size))
+             (async/pipeline-async parallelism out-ch fetch-batch batch-ch)))))
 
 (defn search-spec
   [resource-id class-id query & {:as options

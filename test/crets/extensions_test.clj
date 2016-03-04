@@ -38,11 +38,8 @@
   (is (satisfies? sut/IValues
                   search-result)))
 
-(deftest search-result-values
-  (is (= 100
-         (:total-count (sut/values search-result))))
-  
-  (is (= #{"BROKER", "LP", "STNAME", "STATUS", "SQFT", "VEW", "LN", "AGENT_ID", "URL",
+(deftest search-result-values 
+ (is (= #{"BROKER", "LP", "STNAME", "STATUS", "SQFT", "VEW", "LN", "AGENT_ID", "URL",
           "IF", "LTYP", "AR", "ZIP_CODE", "LD", "E_SCHOOL", "M_SCHOOL", "H_SCHOOL", "EF"}
          (-> search-result
              sut/values
