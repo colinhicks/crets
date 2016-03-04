@@ -45,7 +45,7 @@
   (getMetadata [this])
   (search [this req]))
 
-(defrecord MockSession [state]
+(defrecord MockSession [state throws-on]
   IMockSession
   (login [_ _ _]
     (swap! state assoc :session-id "mock-session-id"))
@@ -57,6 +57,8 @@
     compact-metadata)
 
   (search [_ req]
+    (when (some #{'search} throws-on)
+      (throw (Exception. "Mock exception: search")))
     ;; to support limit & offset, go fishing in the rets SearchRequest
     ;; then reify IValues with the respectively limited :rows of the sample result
     (let [params (->> req rets-search-request-parameters (into {}))
@@ -68,9 +70,13 @@
       (reify
         IMockSearchResult
         (getCount [_]
+          (when (some #{'getCount} throws-on)
+            (throw (Exception. "Mock exception: getCount")))
           (.getCount search-result))
         IValues
         (values [_]
+          (when (some #{'values} throws-on)
+            (throw (Exception. "Mock exception: values")))
           {:column-names (.getColumns search-result)
            :total-count (.getCount search-result)
            :rows (->> (.iterator search-result)
@@ -78,7 +84,7 @@
                       (drop offset)
                       (take limit))})))))
 
-(defn mock-session []
-  (MockSession. (atom {})))
+(defn mock-session [& {:keys [throws-on] :or {throws-on '()}}]
+  (MockSession. (atom {}) throws-on))
 
 

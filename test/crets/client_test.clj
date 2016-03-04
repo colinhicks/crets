@@ -78,4 +78,11 @@
                            (async/<!! (async/into [] out)))]
            (count batches)))
       "Batch searches should return a value on the out chan per run, until either 
-       1) the spec's limit is met, or 2) the server has no more results for the query"))
+       1) the spec's limit is met, or 2) the server has no more results for the query")
+
+  (is (instance? Exception
+                 (let [out (async/chan)]
+                    (-> (utils/mock-session :throws-on '(search))
+                        (sut/batch-search-async {} out 100 1))
+                    (async/<!! out)))
+      "Exceptions should be received on the out chan"))

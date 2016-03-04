@@ -63,13 +63,20 @@
                             (let [search-spec' (assoc search-spec
                                                       :include-count? false
                                                       :limit batch-size
-                                                      :offset offset)
-                                  search-result (fetch-search session search-spec')]
-                              (async/put! batch-ch search-result)
-                              (async/close! batch-ch))))
+                                                      :offset offset)]
+                              (try
+                                (async/put! batch-ch
+                                       (fetch-search session search-spec'))
+                                (catch Exception e
+                                  (async/put! batch-ch e))
+                                (finally
+                                  (async/close! batch-ch))))))
         fetch-peek (fn []
                       (async/go
-                             (fetch-search session (assoc search-spec :count-only? true))))]
+                             (try
+                               (fetch-search session (assoc search-spec :count-only? true))
+                               (catch Exception e
+                                 (async/put! out-ch e)))))]
     (async/go
            (let [server-count (.getCount (async/<! (fetch-peek)))
                  limit (min server-count (or (:limit search-spec) Integer/MAX_VALUE))
