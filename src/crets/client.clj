@@ -37,6 +37,7 @@
 (defn search-spec->request [{:keys [resource-id
                                     class-id
                                     query
+                                    include-count?
                                     count-only?
                                     limit
                                     offset
@@ -44,7 +45,7 @@
   (let [req (SearchRequest. resource-id class-id query)]
     (if count-only?
       (.setCountOnly req)
-      (do (.setCountFirst req)
+      (do (when include-count? (.setCountFirst req))
           (when limit (.setLimit req limit))
           (when offset (.setOffset req limit))
           (when fields (.setSelect req (str/join "," fields)))))
@@ -57,11 +58,11 @@
 
 (defn search-spec
   [resource-id class-id query & {:as options
-                                 :keys [count-only? limit offset fields]
-                                 :or {count-only? false limit nil offset nil fields nil}}]
-  (merge options {:resource-id resource-id
-                  :class-id class-id
-                  :query query}))
+                                 :keys [include-count? count-only? limit offset fields]}]
+  (assoc options
+         :resource-id resource-id
+         :class-id class-id
+         :query query))
 
 
 

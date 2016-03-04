@@ -53,6 +53,7 @@
   {"Int"      edn/read-string
    "Small"    edn/read-string
    "Long"     edn/read-string
+   "Double"   edn/read-string
    "Decimal"  edn/read-string
    "DateTime" #(if-not (seq %)
                 nil
