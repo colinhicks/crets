@@ -6,7 +6,10 @@
             SearchRequest
             SearchResult])
   (:require [clojure.string :as str]
-            [clojure.core.async :as async]))
+            [clojure.set :refer [difference]]
+            [clojure.core.async :as async]
+            [crets.extensions :as ext]
+            [crets.query-syntax :as query]))
 
 ;; login
 
@@ -84,6 +87,8 @@
              (async/onto-chan batch-ch (range 0 limit batch-size))
              (async/pipeline-async parallelism out-ch fetch-batch batch-ch)))))
 
+;; search specification
+
 (defn search-spec
   [resource-id class-id query & {:as options
                                  :keys [include-count? count-only? limit offset fields]}]
@@ -92,6 +97,23 @@
          :class-id class-id
          :query query))
 
+(defn validate-search [{:keys [query resource-id class-id]} schema]
+  (let [required (set (query/required-fields query))
+        available (->> (ext/fields schema resource-id class-id)
+                       (map :id)
+                       set)]
+    {:missing-fields (difference required available)
+     :valid-query-syntax? (seq required)
+     :valid-resource-id-and-class-id? (seq available)}))
 
+(defn valid-search?
+  ([{:as validation-result :keys [valid-resource-id-and-class-id?
+                                  valid-query-syntax?
+                                  missing-fields]}]
+   (and valid-resource-id-and-class-id?
+        valid-query-syntax?
+        (not (seq missing-fields))))  
+  ([search-spec schema]
+   (valid-search? (validate-search search-spec schema))))
 
 

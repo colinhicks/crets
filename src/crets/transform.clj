@@ -1,34 +1,9 @@
 (ns crets.transform
-  (:require [clojure.set :refer [difference]]
-            [clojure.string :as str]
-            [crets.client :as client]
-            [crets.query-syntax :as query]
+  (:require [clojure.string :as str]
             [crets.extensions :as ext]
             [clj-time.format :as timef]
             [clj-time.coerce :as timec]
             [clojure.edn :as edn]))
-
-(def search-spec client/search-spec)
-(def fetch-search client/fetch-search)
-
-(defn validate-search [{:keys [query resource-id class-id]} schema]
-  (let [required (set (query/required-fields query))
-        available (->> (ext/fields schema resource-id class-id)
-                       (map :id)
-                       set)]
-    {:missing-fields (difference required available)
-     :valid-query-syntax? (seq required)
-     :valid-resource-id-and-class-id? (seq available)}))
-
-(defn valid-search?
-  ([{:as validation-result :keys [valid-resource-id-and-class-id?
-                                  valid-query-syntax?
-                                  missing-fields]}]
-   (and valid-resource-id-and-class-id?
-        valid-query-syntax?
-        (not (seq missing-fields))))  
-  ([search-spec schema]
-   (valid-search? (validate-search search-spec schema))))
 
 (defn field-value-fn [f]
   (fn [[k v]] [k ((f k) v)]))

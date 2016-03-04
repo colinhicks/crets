@@ -1,8 +1,10 @@
 (ns crets.client-test
   (:require [clojure.core.async :as async]
             [clojure.test :refer :all]
+            [clojure.string :as str]
             [crets.client :as sut]
-            [crets.extensions :refer [IValues]]
+            [crets.extensions :as ext]
+            [crets.transform :as transform]
             [crets.test-utils :as utils]))
 
 (deftest authorizer-ensures-auth
@@ -57,13 +59,6 @@
             (-> (utils/mock-session) (sut/fetch-search {:limit 1 :offset 1}) .values :rows first))))
 
 (deftest batch-search
-  (is (satisfies? IValues
-                  (let [out (async/chan)]
-                    (-> (utils/mock-session)
-                        (sut/batch-search-async {} out 100 1))
-                    (async/<!! out)))
-      "output channel should receive SearchResult (IValues) vals")
-
   (is (= 10
          (let [out (async/chan)
                batches (do (-> (utils/mock-session)
@@ -86,3 +81,86 @@
                         (sut/batch-search-async {} out 100 1))
                     (async/<!! out)))
       "Exceptions should be received on the out chan"))
+
+(deftest search-query-validation
+  (is (sut/valid-search? {:resource-id "Property"
+                          :class-id "Residential"
+                          :query "(Status=|1,2,3) AND (ListPrice=0-100000)"}
+                         utils/default-metadata)
+      "Query fields must exist in the metadata respective to the resource and class ids")
+
+  (is (not (sut/valid-search? {:resource-id "Property"
+                               :class-id "Residential"
+                               :query "(BahnhofPlatz=1) | (Status=|1,2,3)"}
+                              utils/default-metadata))
+      "Unknown query fields are invalid")
+
+  (is (= #{"BahnhofPlatz"}
+         (:missing-fields (sut/validate-search {:resource-id "Property"
+                                                :class-id "Residential"
+                                                :query "(BahnhofPlatz=1) | (Status=|1,2,3)"}
+                                               utils/default-metadata)))
+      "validate-search returns map including :missing-fields set")
+
+  (is (not (sut/valid-search? {:resource-id "Seafloor"
+                               :class-id "Residential"
+                               :query "(Status=1)"}
+                              utils/default-metadata))
+      "Unknown resources are invalid")
+
+  (is (not (:valid-resource-id-and-class-id?
+            (sut/validate-search {:resource-id "Seafloor"
+                                  :class-id "Residential"
+                                  :query "(Status=1)"}
+                                 utils/default-metadata))))
+
+  (is (not (sut/valid-search? {:resource-id "Property"
+                               :class-id "AirbedAndBreakfast"
+                               :query "(Status=1)"}
+                              utils/default-metadata))
+      "Unknown classes are invalid")
+
+  (is (not (sut/valid-search? {:resource-id "Property" :class-id "Residential" :query ""}
+                              utils/default-metadata))
+      "Blank queries are invalid")
+
+  (is (not (sut/valid-search? {:resource-id "Property" :class-id "Residential" :query "Status=1"}
+                              utils/default-metadata))
+      "Broken query syntax is invalid"))
+
+(deftest search-with-transform
+  (is (= {:brokerage "Laffalot Realty",
+          :elementary-school nil,
+          :exterior-features ["AGENT OWNER" "BURGLAR ALARM"],
+          :high-school nil,
+          :interior-features [],
+          :listing-agent-id "P345",
+          :listing-date #inst "2003-04-02T00:00:00.000-00:00",
+          :listing-id "demo.crt.realtors.org-100",
+          :listing-price 387117,
+          :listing-type "RESIDENTIAL",
+          :listing-url "http://demo.crt.realtors.org/retriever_po",
+          :location "Aurora",
+          :middle-school nil,
+          :square-footage "2026",
+          :status "Active",
+          :street-name "Fourth St.",
+          :view nil,
+          :zip-code 60134}
+         (let [spec {:resource-id "Property" :class-id "RES"}
+               {:keys [resource-id class-id]} spec
+               schema utils/compact-metadata
+               convert-values (transform/field-converter spec schema)
+               lookup-values (transform/field-lookup-resolver spec schema)
+               use-readable-keys (map (transform/field-key-fn
+                                       #(-> (ext/field schema resource-id class-id %)
+                                            :long-name
+                                            (str/replace #" " "_"))))]
+             (->> spec
+                  (sut/fetch-search (utils/mock-session))
+                  (transform/search-result->fields (comp convert-values
+                                                   lookup-values
+                                                   use-readable-keys
+                                                   transform/field-keywordize))
+                  (map (partial into (sorted-map)))
+                  first)))))
