@@ -1,4 +1,4 @@
-(ns crets.extensions
+(ns crets.type-extensions
   (:import [org.realtors.rets.common.metadata Metadata]
            [org.realtors.rets.common.metadata.types MLookup MResource MSystem MLookupType MClass MTable MObject]
            [org.realtors.rets.client SearchResult]))

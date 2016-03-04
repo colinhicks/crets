@@ -1,11 +1,11 @@
 (ns crets.client-test
   (:require [clojure.core.async :as async]
-            [clojure.test :refer :all]
             [clojure.string :as str]
+            [clojure.test :refer :all]
             [crets.client :as sut]
-            [crets.extensions :as ext]
+            [crets.test-utils :as utils]
             [crets.transform :as transform]
-            [crets.test-utils :as utils]))
+            [crets.type-extensions :as ext]))
 
 (deftest authorizer-ensures-auth
   (is (not (sut/authenticated? (utils/mock-session))))

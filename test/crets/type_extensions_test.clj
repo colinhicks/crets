@@ -1,7 +1,9 @@
-(ns crets.extensions-test
+(ns crets.type-extensions-test
   (:require [clojure.test :refer :all]
-            [crets.extensions :as sut]
-            [crets.test-utils :refer [default-metadata compact-metadata search-result]]))
+            [crets.test-utils
+             :refer
+             [compact-metadata default-metadata search-result]]
+            [crets.type-extensions :as sut]))
 
 (deftest rets-metadata-extended-with-protocols
   (is (satisfies? sut/IValues

@@ -1,15 +1,10 @@
 (ns crets.client
-  (:import [org.realtors.rets.client
-            CommonsHttpClient
-            RetsSession
-            RetsVersion
-            SearchRequest
-            SearchResult])
-  (:require [clojure.string :as str]
+  (:require [clojure.core.async :as async]
             [clojure.set :refer [difference]]
-            [clojure.core.async :as async]
-            [crets.extensions :as ext]
-            [crets.query-syntax :as query]))
+            [clojure.string :as str]
+            [crets.query-syntax :as query]
+            [crets.type-extensions :as ext])
+  (:import [org.realtors.rets.client CommonsHttpClient RetsSession RetsVersion SearchRequest SearchResult]))
 
 ;; login
 

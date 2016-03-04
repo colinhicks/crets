@@ -1,9 +1,9 @@
 (ns crets.test-utils
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
-            [crets.extensions :refer [IValues]])
-  (:import [org.realtors.rets.common.metadata Metadata]
-           [org.realtors.rets.client RetsUtil GetMetadataResponse SearchResultHandler SearchResultImpl]))
+            [crets.type-extensions :refer [IValues]])
+  (:import [org.realtors.rets.client GetMetadataResponse RetsUtil SearchResultHandler SearchResultImpl]
+           org.realtors.rets.common.metadata.Metadata))
 
 (defn mock-metadata [path compact?]
   (with-open [stream (-> path io/resource io/input-stream)]

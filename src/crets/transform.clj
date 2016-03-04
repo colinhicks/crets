@@ -1,9 +1,9 @@
 (ns crets.transform
-  (:require [clojure.string :as str]
-            [crets.extensions :as ext]
+  (:require [clj-time.coerce :as timec]
             [clj-time.format :as timef]
-            [clj-time.coerce :as timec]
-            [clojure.edn :as edn]))
+            [clojure.edn :as edn]
+            [clojure.string :as str]
+            [crets.type-extensions :as ext]))
 
 (defn field-value-fn [f]
   (fn [[k v]] [k ((f k) v)]))

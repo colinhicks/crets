@@ -1,9 +1,9 @@
 (ns crets.transform-test
   (:require [clojure.string :as str]
             [clojure.test :refer :all]
-            [crets.extensions :as ext]
             [crets.test-utils :as utils]
-            [crets.transform :as sut]))
+            [crets.transform :as sut]
+            [crets.type-extensions :as ext]))
 
 (deftest search-result-transforming
   (is (= [["BROKER" "Laffalot Realty"] ["LP" "387117"]
