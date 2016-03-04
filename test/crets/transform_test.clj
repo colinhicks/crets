@@ -1,9 +1,9 @@
-(ns crets.core-test
-  (:require [clojure.test :refer :all]
-            [crets.core :as sut]
+(ns crets.transform-test
+  (:require [clojure.string :as str]
+            [clojure.test :refer :all]
             [crets.extensions :as ext]
             [crets.test-utils :as utils]
-            [clojure.string :as str]))
+            [crets.transform :as sut]))
 
 (deftest search-query-validation
   (is (sut/valid-search? {:resource-id "Property"

@@ -1,4 +1,4 @@
-(ns crets.core
+(ns crets.transform
   (:require [clojure.set :refer [difference]]
             [clojure.string :as str]
             [crets.client :as client]
