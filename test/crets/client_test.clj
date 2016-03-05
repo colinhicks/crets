@@ -3,15 +3,16 @@
             [clojure.string :as str]
             [clojure.test :refer :all]
             [crets.client :as sut]
-            [crets.test-utils :as utils]
+            [crets.test-mocks :as mocks]
             [crets.transform :as transform]
-            [crets.type-extensions :as ext]))
+            [crets.type-extensions :as ext]
+            [crets.utils :as utils]))
 
 (deftest authorizer-ensures-auth
-  (is (not (sut/authenticated? (utils/mock-session))))
+  (is (not (sut/authenticated? (mocks/mock-session))))
   
   (is (sut/authenticated?
-       ((sut/authorizer "username" "password") (utils/mock-session)))))
+       ((sut/authorizer "username" "password") (mocks/mock-session)))))
 
 
 (deftest search-request-specification
@@ -49,26 +50,26 @@
 
 
 (deftest mock-session-search-behavior
-  (is (= 1 (-> (utils/mock-session)
+  (is (= 1 (-> (mocks/mock-session)
                (sut/fetch-search {:limit 1})
                .values
                :rows
                count)))
 
-  (is (not= (-> (utils/mock-session) (sut/fetch-search {:limit 1}) .values :rows first)
-            (-> (utils/mock-session) (sut/fetch-search {:limit 1 :offset 1}) .values :rows first))))
+  (is (not= (-> (mocks/mock-session) (sut/fetch-search {:limit 1}) .values :rows first)
+            (-> (mocks/mock-session) (sut/fetch-search {:limit 1 :offset 1}) .values :rows first))))
 
 (deftest batch-search
   (is (= 10
          (let [out (async/chan)
-               batches (do (-> (utils/mock-session)
+               batches (do (-> (mocks/mock-session)
                                (sut/batch-search-async {:limit 50000} out 10 1))
                            (async/<!! (async/into [] out)))]
            (count batches))))
 
   (is (= 5
          (let [out (async/chan)
-               batches (do (-> (utils/mock-session)
+               batches (do (-> (mocks/mock-session)
                                (sut/batch-search-async {:limit 50} out 10 1))
                            (async/<!! (async/into [] out)))]
            (count batches)))
@@ -77,7 +78,7 @@
 
   (is (instance? Exception
                  (let [out (async/chan)]
-                    (-> (utils/mock-session :throws-on '(search))
+                    (-> (mocks/mock-session :throws-on '(search))
                         (sut/batch-search-async {} out 100 1))
                     (async/<!! out)))
       "Exceptions should be received on the out chan"))
@@ -86,46 +87,46 @@
   (is (sut/valid-search? {:resource-id "Property"
                           :class-id "Residential"
                           :query "(Status=|1,2,3) AND (ListPrice=0-100000)"}
-                         utils/default-metadata)
+                         mocks/default-metadata)
       "Query fields must exist in the metadata respective to the resource and class ids")
 
   (is (not (sut/valid-search? {:resource-id "Property"
                                :class-id "Residential"
                                :query "(BahnhofPlatz=1) | (Status=|1,2,3)"}
-                              utils/default-metadata))
+                              mocks/default-metadata))
       "Unknown query fields are invalid")
 
   (is (= #{"BahnhofPlatz"}
          (:missing-fields (sut/validate-search {:resource-id "Property"
                                                 :class-id "Residential"
                                                 :query "(BahnhofPlatz=1) | (Status=|1,2,3)"}
-                                               utils/default-metadata)))
+                                               mocks/default-metadata)))
       "validate-search returns map including :missing-fields set")
 
   (is (not (sut/valid-search? {:resource-id "Seafloor"
                                :class-id "Residential"
                                :query "(Status=1)"}
-                              utils/default-metadata))
+                              mocks/default-metadata))
       "Unknown resources are invalid")
 
   (is (not (:valid-resource-id-and-class-id?
             (sut/validate-search {:resource-id "Seafloor"
                                   :class-id "Residential"
                                   :query "(Status=1)"}
-                                 utils/default-metadata))))
+                                 mocks/default-metadata))))
 
   (is (not (sut/valid-search? {:resource-id "Property"
                                :class-id "AirbedAndBreakfast"
                                :query "(Status=1)"}
-                              utils/default-metadata))
+                              mocks/default-metadata))
       "Unknown classes are invalid")
 
   (is (not (sut/valid-search? {:resource-id "Property" :class-id "Residential" :query ""}
-                              utils/default-metadata))
+                              mocks/default-metadata))
       "Blank queries are invalid")
 
   (is (not (sut/valid-search? {:resource-id "Property" :class-id "Residential" :query "Status=1"}
-                              utils/default-metadata))
+                              mocks/default-metadata))
       "Broken query syntax is invalid"))
 
 (deftest search-with-transform
@@ -149,7 +150,7 @@
           :zip-code 60134}
          (let [spec {:resource-id "Property" :class-id "RES"}
                {:keys [resource-id class-id]} spec
-               schema utils/compact-metadata
+               schema mocks/compact-metadata
                convert-values (transform/field-converter spec schema)
                lookup-values (transform/field-lookup-resolver spec schema)
                use-readable-keys (map (transform/field-key-fn
@@ -157,7 +158,7 @@
                                             :long-name
                                             (str/replace #" " "_"))))]
              (->> spec
-                  (sut/fetch-search (utils/mock-session))
+                  (sut/fetch-search (mocks/mock-session))
                   (transform/search-result->fields (comp convert-values
                                                    lookup-values
                                                    use-readable-keys
