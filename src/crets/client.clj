@@ -14,12 +14,12 @@
    (doto (RetsSession. host (CommonsHttpClient.) version)
      (.setMethod "POST"))))
 
-(defn authenticated? [session]
+(defn authorized? [session]
   (boolean (.getSessionId session)))
 
 (defn authorizer [user-id pass]
   (fn ensure-auth! [session]
-    (if-not (authenticated? session)
+    (if-not (authorized? session)
       (doto session
         (.login user-id pass))
       session)))
@@ -55,6 +55,8 @@
        search-spec->request
        (.search session)))
 
+;; async
+
 (defn batch-search-async [session search-spec out-ch batch-size parallelism]
   (let [fetch-batch (fn [offset batch-ch]
                           (async/go
@@ -77,10 +79,36 @@
                                  (async/put! out-ch e)))))]
     (async/go
            (let [server-count (.getCount (async/<! (fetch-peek)))
-                 limit (min server-count (or (:limit search-spec) Integer/MAX_VALUE))
-                 batch-ch (async/chan)]
-             (async/onto-chan batch-ch (range 0 limit batch-size))
-             (async/pipeline-async parallelism out-ch fetch-batch batch-ch)))))
+                 limit (min server-count (or (:limit search-spec) Integer/MAX_VALUE))]
+             (async/pipeline-async parallelism out-ch fetch-batch
+                    (async/to-chan (range 0 limit batch-size)))))))
+
+(defn search-runner [in-ch out-ch batch-size parallelism]
+  (let [search-run (fn [[session spec result-transducer] ch]
+                     (let [task-ch (async/chan 0 result-transducer)]
+                       (batch-search-async session spec task-ch batch-size parallelism)
+                       (async/pipe (async/into [] task-ch) ch)))]
+    (async/pipeline-async 1 out-ch search-run in-ch)))
+
+(defn authorizer-async [in-ch out-ch user-id pass]
+  (let [ensure-auth (authorizer user-id pass)
+        exec (fn [session ch]
+               (async/go
+                      (try
+                        (let [authed-session (ensure-auth session)]
+                          (async/put! ch authed-session))
+                        (catch Exception e
+                          (async/put! ch e))
+                        (finally
+                          (async/close! ch)))))]
+    (async/pipeline-async 1 out-ch exec in-ch)))
+
+(defn authorized-session-async [host user-id pass]
+  (let [sess-ch (async/promise-chan)
+        out-ch (async/chan 1)]
+    (authorizer-async sess-ch out-ch user-id pass)
+    (async/put! sess-ch (create-session host))
+    out-ch))
 
 ;; search specification
 
@@ -91,6 +119,8 @@
          :resource-id resource-id
          :class-id class-id
          :query query))
+
+;; validation
 
 (defn validate-search [{:keys [query resource-id class-id]} schema]
   (let [required (set (query/required-fields query))
@@ -110,5 +140,3 @@
         (not (seq missing-fields))))  
   ([search-spec schema]
    (valid-search? (validate-search search-spec schema))))
-
-

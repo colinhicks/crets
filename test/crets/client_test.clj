@@ -9,9 +9,9 @@
             [crets.utils :as utils]))
 
 (deftest authorizer-ensures-auth
-  (is (not (sut/authenticated? (mocks/mock-session))))
+  (is (not (sut/authorized? (mocks/mock-session))))
   
-  (is (sut/authenticated?
+  (is (sut/authorized?
        ((sut/authorizer "username" "password") (mocks/mock-session)))))
 
 
@@ -165,3 +165,17 @@
                                                    transform/field-keywordize))
                   (map (partial into (sorted-map)))
                   first)))))
+
+(deftest authorization-async
+  (is (sut/authorized? (let [in (async/chan)
+                             out (async/chan)
+                             authorizer (sut/authorizer-async in out "user" "pass")]
+                         (async/put! in (mocks/mock-session))
+                         (async/<!! out))))
+
+  (is (instance? Exception (let [in (async/chan)
+                             out (async/chan)
+                             authorizer (sut/authorizer-async in out "user" "pass")]
+                         (async/put! in (mocks/mock-session :throws-on '(login)))
+                         (async/<!! out)))
+      "Exceptions should be put on the out channel"))

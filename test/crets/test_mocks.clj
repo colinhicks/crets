@@ -19,6 +19,8 @@
 (defrecord MockSession [state throws-on]
   IMockSession
   (login [_ _ _]
+    (when (some #{'login} throws-on)
+      (throw (Exception. "Mock exception: login")))
     (swap! state assoc :session-id "mock-session-id"))
 
   (getSessionId [_]
