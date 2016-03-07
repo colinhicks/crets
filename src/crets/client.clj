@@ -83,7 +83,7 @@
              (async/pipeline-async parallelism out-ch fetch-batch
                     (async/to-chan (range 0 limit batch-size)))))))
 
-(defn search-runner [in-ch out-ch batch-size parallelism]
+(defn batch-search-runner [in-ch out-ch batch-size parallelism]
   (let [search-run (fn [[session spec result-transducer] ch]
                      (let [task-ch (async/chan 0 result-transducer)]
                        (batch-search-async session spec task-ch batch-size parallelism)

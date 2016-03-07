@@ -1,7 +1,9 @@
 (ns crets.type-extensions
-  (:import [org.realtors.rets.common.metadata Metadata]
-           [org.realtors.rets.common.metadata.types MLookup MResource MSystem MLookupType MClass MTable MObject]
-           [org.realtors.rets.client SearchResult]))
+  (:require [clojure.edn :as edn]
+            [clojure.pprint :refer [pprint]])
+  (:import org.realtors.rets.client.SearchResult
+           org.realtors.rets.common.metadata.Metadata
+           [org.realtors.rets.common.metadata.types MClass MLookup MLookupType MObject MResource MSystem MTable]))
 
 ;; IValues
 
@@ -129,4 +131,18 @@
        :lookup-types
        (some #(when (= (:id %) lookup-val) %))
        :long-value))
+
+(defn write-minimal-schema [path metadata resource-id]
+  (spit path (with-out-str
+               (-> metadata
+                   (metadata->minimal-schema resource-id)
+                   pprint))))
+
+(defn read-minimal-schema [path]
+  (->> path
+       slurp
+       edn/read-string
+       map->MinimalSchema))
+
+
 
