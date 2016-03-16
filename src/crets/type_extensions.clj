@@ -101,18 +101,21 @@
   (lookups [obj resource-id]
     (:lookups (resource obj resource-id))))
 
-(defrecord MinimalSchema [lookups' classes']
+(defrecord MinimalSchema [id lookups classes key-field]
   ISchema
   (classes [_ _]
-    classes')
+    classes)
 
   (lookups [_ _]
-    lookups'))
+    lookups))
 
 (defn metadata->minimal-schema [metadata resource-id]
-  (MinimalSchema.
-    (lookups metadata resource-id)
-    (classes metadata resource-id)))
+  (let [r (resource metadata resource-id)]
+    (MinimalSchema.
+     resource-id
+     (:lookups r)
+     (:classes r)
+     (:key-field r))))
 
 ;; helpers
 
