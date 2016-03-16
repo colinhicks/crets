@@ -85,7 +85,7 @@
 
 ;; ISchema
 
-(defprotocol ISchema
+(defprotocol ICommonMetadata
   (classes [this resource-id])
   (lookups [this resource-id]))
 
@@ -94,7 +94,7 @@
        (some #(when (= resource-id (:id %)) %))))
 
 (extend-type Metadata
-  ISchema
+  ICommonMetadata
   (classes [obj resource-id]
     (:classes (resource obj resource-id)))
 
@@ -102,7 +102,7 @@
     (:lookups (resource obj resource-id))))
 
 (defrecord MinimalSchema [id lookups classes key-field]
-  ISchema
+  ICommonMetadata
   (classes [_ _]
     classes)
 

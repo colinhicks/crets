@@ -6,7 +6,7 @@
 (deftest rets-metadata-extended-with-protocols
   (is (satisfies? sut/IValues
                   mocks/default-metadata))
-  (is (satisfies? sut/ISchema
+  (is (satisfies? sut/ICommonMetadata
                   mocks/default-metadata)))
 
 (deftest classes-protocol-fn
@@ -31,7 +31,7 @@
          (sut/resolve-lookup mocks/compact-metadata "Property" "RES" "H_SCHOOL" "300"))))
 
 (deftest metadata-to-minimal-schema
-  (is (satisfies? sut/ISchema
+  (is (satisfies? sut/ICommonMetadata
                   (sut/metadata->minimal-schema mocks/default-metadata "Property"))))
 
 (deftest rets-search-result-extended-with-protocol
