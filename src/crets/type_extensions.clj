@@ -101,7 +101,7 @@
   (lookups [obj resource-id]
     (:lookups (resource obj resource-id))))
 
-(defrecord MinimalSchema [id lookups classes key-field]
+(defrecord ResourceMetadata [id lookups classes key-field]
   ICommonMetadata
   (classes [_ _]
     classes)
@@ -109,9 +109,9 @@
   (lookups [_ _]
     lookups))
 
-(defn metadata->minimal-schema [metadata resource-id]
+(defn metadata->resource-metadata [metadata resource-id]
   (let [r (resource metadata resource-id)]
-    (MinimalSchema.
+    (ResourceMetadata.
      resource-id
      (:lookups r)
      (:classes r)
@@ -143,14 +143,14 @@
 (defn write-minimal-schema [path metadata resource-id]
   (spit path (with-out-str
                (-> metadata
-                   (metadata->minimal-schema resource-id)
+                   (metadata->resource-metadata resource-id)
                    pprint))))
 
 (defn read-minimal-schema [path]
   (->> path
        slurp
        edn/read-string
-       map->MinimalSchema))
+       map->ResourceMetadata))
 
 
 

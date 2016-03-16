@@ -32,7 +32,7 @@
 
 (deftest metadata-to-minimal-schema
   (is (satisfies? sut/ICommonMetadata
-                  (sut/metadata->minimal-schema mocks/default-metadata "Property"))))
+                  (sut/metadata->resource-metadata mocks/default-metadata "Property"))))
 
 (deftest rets-search-result-extended-with-protocol
   (is (satisfies? sut/IValues
