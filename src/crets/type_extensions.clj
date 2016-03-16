@@ -61,7 +61,12 @@
      :lookup?          (.isLookup obj)
      :lookup-name      (.getLookupName obj)
      :lookup-multiple? (= "LookupMulti" (.getInterpretation obj))
-     :data-type        (.getDataType obj)})
+     :data-type        (.getDataType obj)
+     :searchable?      (.getSearchable obj)
+     :default          (.getDefault obj)
+     :unique?          (.getUnique obj)
+     :in-key-index?    (.getInKeyIndex obj)
+     :units            (.getUnits obj)})
 
   MObject
   (values [obj]
@@ -75,7 +80,7 @@
   SearchResult
   (values [obj]
     {:column-names (.getColumns obj)
-     :rows (iterator-seq (.iterator obj))}))
+     :rows         (iterator-seq (.iterator obj))}))
 
 
 ;; ISchema
