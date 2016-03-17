@@ -73,3 +73,12 @@
                                  vec)
                             (resolve v)))))))]
     (map (field-value-fn #(or (resolver %) identity)))))
+
+(defn group-fields [groupings fields]
+  (let [elided (remove (fn [[k]]
+                         (some (fn [[_ gfn]] (gfn k)) groupings))
+                       fields)
+        minted (map (fn [[gk gfn]]
+                      [gk (filter (fn [[k]] (gfn k)) fields)])
+                    groupings)]
+    (into elided minted)))

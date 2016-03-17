@@ -64,3 +64,14 @@
                               ["LP" "123456"]])))
       "The field converter should ignore lookup fields"))
 
+(deftest grouping-fields
+  (let [fields {:foo 1 :bar 2 :baz 3}]
+    (is (= '([:quux ([:foo 1] [:bar 2])] [:baz 3])
+           (sut/group-fields {:quux #{:foo :bar}}
+                fields)))
+
+    (is (= #{[:quux '([:foo 1] [:bar 2])] [:norf '([:bar 2] [:baz 3])]}
+           (-> {:quux #{:foo :bar}
+                :norf #(re-find #"^b.*" (name %))}
+               (sut/group-fields fields)
+               set)))))
