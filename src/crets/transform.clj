@@ -22,7 +22,7 @@
    (search-result->fields (map identity) search-result))
   ([xf search-result]
    (let [{:keys [column-names rows]} (ext/values search-result)]
-     (map #(transduce xf conj (map vector column-names %)) rows))))
+     (map #(into [] xf (map vector column-names %)) rows))))
 
 (def default-type-converters
   {"Int"      edn/read-string
