@@ -79,6 +79,6 @@
                          (some (fn [[_ gfn]] (gfn k)) groupings))
                        fields)
         minted (map (fn [[gk gfn]]
-                      [gk (filter (fn [[k]] (gfn k)) fields)])
+                      [gk (keep (fn [[k v]] (when-let [k' (gfn k)] [k' v])) fields)])
                     groupings)]
     (into elided minted)))
