@@ -74,11 +74,15 @@
                             (resolve v)))))))]
     (map (field-value-fn #(or (resolver %) identity)))))
 
-(defn group-fields [groupings fields]
-  (let [elided (remove (fn [[k]]
-                         (some (fn [[_ gfn]] (gfn k)) groupings))
-                       fields)
-        minted (map (fn [[gk gfn]]
-                      [gk (keep (fn [[k v]] (when-let [k' (gfn k)] [k' v])) fields)])
-                    groupings)]
-    (into elided minted)))
+(defn group-fields
+  ([groupings fields] (group-fields groupings fields {}))
+  ([groupings fields group-to]
+   (let [elided (remove (fn [[k]]
+                          (some (fn [[_ gfn]] (gfn k)) groupings))
+                        fields)
+         minted (map (fn [[gk gfn]]
+                       [gk (into group-to
+                                 (keep (fn [[k v]] (when-let [k' (gfn k)] [k' v])))
+                                 fields)])
+                     groupings)]
+     (into elided minted))))
