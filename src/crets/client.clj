@@ -1,5 +1,6 @@
 (ns crets.client
-  (:require [clojure.set :refer [difference]]
+  (:require [clojure.core.async :as async]
+            [clojure.set :refer [difference]]
             [clojure.string :as str]
             [crets.query-syntax :as query]
             [crets.type-extensions :as ext])
