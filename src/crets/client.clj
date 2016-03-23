@@ -1,6 +1,5 @@
 (ns crets.client
-  (:require [clojure.core.async :as async]
-            [clojure.set :refer [difference]]
+  (:require [clojure.set :refer [difference]]
             [clojure.string :as str]
             [crets.query-syntax :as query]
             [crets.type-extensions :as ext])
@@ -58,19 +57,21 @@
 ;; async
 
 (defn batch-search-async [session search-spec out-ch batch-size parallelism]
-  (let [fetch-batch (fn [offset batch-ch]
-                          (async/go
-                            (let [search-spec' (assoc search-spec
-                                                      :include-count? false
-                                                      :limit batch-size
-                                                      :offset offset)]
-                              (try
-                                (async/put! batch-ch
-                                       (fetch-search session search-spec'))
-                                (catch Exception e
-                                  (async/put! batch-ch e))
-                                (finally
-                                  (async/close! batch-ch))))))
+  (let [limit (or (:limit search-spec) Integer/MAX_VALUE)
+        batch-size' (min limit batch-size)
+        fetch-batch (fn [offset batch-ch]
+                      (async/go
+                        (let [search-spec' (assoc search-spec
+                                                  :include-count? false
+                                                  :limit batch-size'
+                                                  :offset offset)]
+                          (try
+                            (async/put! batch-ch
+                                        (fetch-search session search-spec'))
+                            (catch Exception e
+                              (async/put! batch-ch e))
+                            (finally
+                              (async/close! batch-ch))))))
         fetch-peek (fn []
                       (async/go
                              (try
@@ -79,9 +80,9 @@
                                  (async/put! out-ch e)))))]
     (async/go
            (let [server-count (.getCount (async/<! (fetch-peek)))
-                 limit (min server-count (or (:limit search-spec) Integer/MAX_VALUE))]
+                 limit' (min server-count limit)]
              (async/pipeline-async parallelism out-ch fetch-batch
-                    (async/to-chan (range 0 limit batch-size)))))))
+                    (async/to-chan (range 0 limit' batch-size')))))))
 
 (defn batch-search-runner [in-ch out-ch batch-size parallelism]
   (let [search-run (fn [[session spec result-transducer] ch]
