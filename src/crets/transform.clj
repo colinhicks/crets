@@ -1,10 +1,20 @@
 (ns crets.transform
-  (:require [clj-time.coerce :as timec]
-            [clj-time.format :as timef]
-            [clojure.edn :as edn]
-            [clojure.string :as str]
-            [crets.type-extensions :as ext]
-            [crets.protocols :as p]))
+  (:require [clj-time
+             [coerce :as timec]
+             [format :as timef]]
+            [clojure
+             [edn :as edn]
+             [string :as str]]
+            [crets
+             [protocols :as p]
+             [type-extensions :as ext]])
+  (:import org.realtors.rets.client.SearchResult))
+
+(extend-protocol p/Interop
+  SearchResult
+  (->clj [obj]
+    {:column-names (.getColumns obj)
+     :rows         (iterator-seq (.iterator obj))}))
 
 (defn field-value-fn [f]
   (fn [[k v]] [k ((f k) v)]))

@@ -2,8 +2,7 @@
   (:require [clojure.edn :as edn]
             [clojure.pprint :refer [pprint]]
             [crets.protocols :as p])
-  (:import org.realtors.rets.client.SearchResult
-           org.realtors.rets.common.metadata.Metadata
+  (:import org.realtors.rets.common.metadata.Metadata
            [org.realtors.rets.common.metadata.types MClass MLookup MLookupType MObject MResource MSystem MTable]))
 
 (extend-protocol p/Interop
@@ -71,15 +70,8 @@
      :mime-type     (.getMIMEType obj)
      :visible-name  (.getVisibleName obj)
      :standard-name (.getStandardName obj)
-     :description   (.getDescription obj)})
+     :description   (.getDescription obj)}))
 
-  SearchResult
-  (->clj [obj]
-    {:column-names (.getColumns obj)
-     :rows         (iterator-seq (.iterator obj))}))
-
-
-;; ISchema
 
 (defn- resource [metadata resource-id]
   (->> metadata p/->clj :system :resources
@@ -111,38 +103,35 @@
 
 ;; helpers
 
-(defn fields [schema resource-id, class-id]
-  (->> (p/classes schema resource-id)
+(defn fields [metadata resource-id, class-id]
+  (->> (p/classes metadata resource-id)
        (some #(when (= class-id (:id %)) %))
        :tables))
 
-(defn field [schema resource-id, class-id field-id]
-  (->> (fields schema resource-id class-id)
+(defn field [metadata resource-id, class-id field-id]
+  (->> (fields metadata resource-id class-id)
        (some #(when (= field-id (:id %)) %))))
 
-(defn lookup [schema resource-id lookup-name]
-  (->> (p/lookups schema resource-id)
+(defn lookup [metadata resource-id lookup-name]
+  (->> (p/lookups metadata resource-id)
        (some #(when (= (:id %) lookup-name) %))))
 
-(defn resolve-lookup [schema resource-id class-id field-id lookup-val]
-  (->> (field schema resource-id class-id field-id)
+(defn resolve-lookup [metadata resource-id class-id field-id lookup-val]
+  (->> (field metadata resource-id class-id field-id)
        :lookup-name
-       (lookup schema resource-id)
+       (lookup metadata resource-id)
        :lookup-types
        (some #(when (= (:id %) lookup-val) %))
        :long-value))
 
-(defn write-minimal-schema [path metadata resource-id]
+(defn write-resource-metadata [path metadata resource-id]
   (spit path (with-out-str
                (-> metadata
                    (metadata->resource-metadata resource-id)
                    pprint))))
 
-(defn read-minimal-schema [path]
+(defn read-resource-metadata [path]
   (->> path
        slurp
        edn/read-string
        map->ResourceMetadata))
-
-
-
