@@ -7,4 +7,6 @@
                  [clj-time "0.11.0"]
                  [galdolber/trulia-java-rets-client "1.0"]
                  [instaparse "1.4.1"]
-                 [org.clojure/core.async "0.2.374"]])
+                 [org.clojure/core.async "0.2.374"]
+                 [prismatic/schema "1.1.0"]
+                 [com.gearswithingears/shrubbery "0.3.1"]])
