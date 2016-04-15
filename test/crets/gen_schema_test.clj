@@ -2,8 +2,8 @@
   (:require [clojure.test :refer :all]
             [crets
              [gen-schema :as sut]
-             [protocols :as p]
-             [type-extensions :as ext]]
+             [metadata :as ext]
+             [protocols :as p]]
             [schema.core :as s]
             [shrubbery.core :refer [stub]]))
 

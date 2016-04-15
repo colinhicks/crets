@@ -1,4 +1,4 @@
-(ns crets.transform
+(ns crets.search-result
   (:require [clj-time
              [coerce :as timec]
              [format :as timef]]
@@ -6,8 +6,9 @@
              [edn :as edn]
              [string :as str]]
             [crets
+             [metadata :as m]
              [protocols :as p]
-             [type-extensions :as ext]])
+             [utils :as utils]])
   (:import org.realtors.rets.client.SearchResult))
 
 (extend-protocol p/Interop
@@ -22,11 +23,7 @@
 (defn field-key-fn [f]
   (fn [[k v]] [(f k) v]))
 
-(def keywordize (comp keyword
-                      str/lower-case
-                      #(str/replace % #"_" "-")))
-
-(def field-keywordize (map (field-key-fn keywordize)))
+(def field-keywordize (map (field-key-fn utils/keywordize)))
 
 (defn search-result->fields
   ([search-result]
@@ -53,7 +50,7 @@
   ([search-spec schema]
    (field-converter search-spec schema default-type-converters))
   ([{:keys [resource-id class-id]} schema converters]
-   (let [fields (ext/fields schema resource-id class-id)
+   (let [fields (m/fields schema resource-id class-id)
          converter (memoize (fn [field-id]
                               (let [field (some #(when (= field-id (:id %)) %) fields)]
                                 (when-not (:lookup? field)
@@ -65,7 +62,7 @@
 
 (defn field-lookup-resolver [{:keys [resource-id class-id]} schema]
   (let [lookups (p/lookups schema resource-id)
-        fields (ext/fields schema resource-id class-id)
+        fields (m/fields schema resource-id class-id)
         resolver (memoize
                   (fn [field-id]
                     (let [field (some #(when (= field-id (:id %)) %) fields)
@@ -84,16 +81,3 @@
                                  vec)
                             (resolve v)))))))]
     (map (field-value-fn #(or (resolver %) identity)))))
-
-(defn group-fields
-  ([groupings fields] (group-fields groupings fields {}))
-  ([groupings fields group-to]
-   (let [elided (remove (fn [[k]]
-                          (some (fn [[_ gfn]] (gfn k)) groupings))
-                        fields)
-         minted (map (fn [[gk gfn]]
-                       [gk (into group-to
-                                 (keep (fn [[k v]] (when-let [k' (gfn k)] [k' v])))
-                                 fields)])
-                     groupings)]
-     (into elided minted))))

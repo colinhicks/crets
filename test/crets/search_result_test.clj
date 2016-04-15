@@ -1,9 +1,10 @@
-(ns crets.transform-test
-  (:require [clojure.string :as str]
-            [clojure.test :refer :all]
-            [crets.test-mocks :as mocks]
-            [crets.transform :as sut]
-            [crets.type-extensions :as ext]))
+(ns crets.search-result-test
+  (:require [clojure
+             [string :as str]
+             [test :refer :all]]
+            [crets
+             [search-result :as sut]
+             [test-mocks :as mocks]]))
 
 (deftest search-result-transforming
   (is (= [["BROKER" "Laffalot Realty"] ["LP" "387117"]
@@ -63,23 +64,3 @@
              (transduce conj [["H_SCHOOL" "300" (comment :data-type int :lookup? true)]
                               ["LP" "123456"]])))
       "The field converter should ignore lookup fields"))
-
-(deftest grouping-fields
-  (let [fields {:foo 1 :bar 2 :baz 3}]
-    (is (= '([:quux {:foo 1 :bar 2}] [:baz 3])
-           (sut/group-fields {:quux #{:foo :bar}} fields)))
-
-    (is (= #{[:quux {:foo 1 :bar 2}] [:norf {:bar 2 :baz 3}]}
-           (-> {:quux #{:foo :bar}
-                :norf #(when (re-find #"^b.*" (name %)) %)}
-               (sut/group-fields fields)
-               set)))
-
-    (is (= '([:quux [[:ar 2] [:az 3]]] [:foo 1])
-           (sut/group-fields {:quux #(->> %
-                                          name
-                                          (re-matches #"^b(.*)")
-                                          second
-                                          keyword)}
-                fields
-                [])))))

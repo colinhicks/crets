@@ -1,5 +1,5 @@
 (ns crets.test-mocks
-  (:require[clojure.string :as str]
+  (:require [clojure.string :as str]
             [crets.protocols :as p]
             [crets.utils :as utils]))
 

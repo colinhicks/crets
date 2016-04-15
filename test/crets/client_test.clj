@@ -1,13 +1,15 @@
 (ns crets.client-test
-  (:require [clojure.core.async :as async]
-            [clojure.string :as str]
-            [clojure.test :refer :all]
-            [crets.client :as sut]
-            [crets.test-mocks :as mocks]
-            [crets.transform :as transform]
-            [crets.type-extensions :as ext]
-            [crets.utils :as utils]
-            [crets.protocols :as p]))
+  (:require [clojure
+             [string :as str]
+             [test :refer :all]]
+            [clojure.core.async :as async]
+            [crets
+             [client :as sut]
+             [metadata :as m]
+             [protocols :as p]
+             [search-result :as sr]
+             [test-mocks :as mocks]
+             [utils :as utils]]))
 
 (deftest authorizer-ensures-auth
   (is (not (sut/authorized? (mocks/mock-session))))
@@ -152,18 +154,18 @@
          (let [spec {:resource-id "Property" :class-id "RES"}
                {:keys [resource-id class-id]} spec
                schema mocks/compact-metadata
-               convert-values (transform/field-converter spec schema)
-               lookup-values (transform/field-lookup-resolver spec schema)
-               use-readable-keys (map (transform/field-key-fn
-                                       #(-> (ext/field schema resource-id class-id %)
+               convert-values (sr/field-converter spec schema)
+               lookup-values (sr/field-lookup-resolver spec schema)
+               use-readable-keys (map (sr/field-key-fn
+                                       #(-> (m/field schema resource-id class-id %)
                                             :long-name
                                             (str/replace #" " "_"))))]
              (->> spec
                   (sut/fetch-search (mocks/mock-session))
-                  (transform/search-result->fields (comp convert-values
+                  (sr/search-result->fields (comp convert-values
                                                    lookup-values
                                                    use-readable-keys
-                                                   transform/field-keywordize))
+                                                   sr/field-keywordize))
                   (map (partial into (sorted-map)))
                   first)))))
 

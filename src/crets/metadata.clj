@@ -1,4 +1,4 @@
-(ns crets.type-extensions
+(ns crets.metadata
   (:require [clojure.edn :as edn]
             [clojure.pprint :refer [pprint]]
             [crets.protocols :as p])

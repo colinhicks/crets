@@ -1,8 +1,9 @@
-(ns crets.type-extensions-test
+(ns crets.metadata-test
   (:require [clojure.test :refer :all]
-            [crets.test-mocks :as mocks]
-            [crets.protocols :as p]
-            [crets.type-extensions :as sut]))
+            [crets
+             [metadata :as sut]
+             [protocols :as p]
+             [test-mocks :as mocks]]))
 
 (deftest rets-metadata-extended-with-protocols
   (is (satisfies? p/Interop

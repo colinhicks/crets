@@ -1,9 +1,11 @@
 (ns crets.client
-  (:require [clojure.core.async :as async]
-            [clojure.set :refer [difference]]
-            [clojure.string :as str]
-            [crets.query-syntax :as query]
-            [crets.type-extensions :as ext])
+  (:require [clojure
+             [set :refer [difference]]
+             [string :as str]]
+            [clojure.core.async :as async]
+            [crets
+             [metadata :as m]
+             [query-syntax :as query]])
   (:import [org.realtors.rets.client CommonsHttpClient RetsSession RetsVersion SearchRequest SearchResult]))
 
 ;; login
@@ -126,7 +128,7 @@
 
 (defn validate-search [{:keys [query resource-id class-id]} schema]
   (let [required (set (query/required-fields query))
-        available (->> (ext/fields schema resource-id class-id)
+        available (->> (m/fields schema resource-id class-id)
                        (map :id)
                        set)]
     {:missing-fields (difference required available)

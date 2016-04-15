@@ -1,8 +1,8 @@
 (ns crets.gen-schema
   (:require [crets
-             [transform :as t]
+             [metadata :as ext]
              [protocols :as p]
-             [type-extensions :as ext]]
+             [utils :as utils]]
             [schema.core :as s]))
 
 (def rets-data-type->stype
@@ -22,7 +22,7 @@
     (get rets-data-type->stype data-type 's/Str)))
 
 (defn key+stype [field]
-  [(t/keywordize (:id field))
+  [(utils/keywordize (:id field))
    (stype field)])
 
 (defn schema [metadata resource-id class-id]
