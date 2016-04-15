@@ -2,11 +2,12 @@
   (:require [clojure.test :refer :all]
             [crets
              [gen-schema :as sut]
+             [protocols :as p]
              [type-extensions :as ext]]
             [schema.core :as s]
             [shrubbery.core :refer [stub]]))
 
-(def metadata-stub (stub ext/ICommonMetadata {:classes [{:id "Foo"
+(def metadata-stub (stub p/ICommonMetadata {:classes [{:id "Foo"
                                                          :tables [{:id "Bar_Baz"
                                                                    :data-type "Date"
                                                                    :lookup? false

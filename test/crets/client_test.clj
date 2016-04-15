@@ -6,7 +6,8 @@
             [crets.test-mocks :as mocks]
             [crets.transform :as transform]
             [crets.type-extensions :as ext]
-            [crets.utils :as utils]))
+            [crets.utils :as utils]
+            [crets.protocols :as p]))
 
 (deftest authorizer-ensures-auth
   (is (not (sut/authorized? (mocks/mock-session))))
@@ -52,12 +53,12 @@
 (deftest mock-session-search-behavior
   (is (= 1 (-> (mocks/mock-session)
                (sut/fetch-search {:limit 1})
-               .values
+               p/->clj
                :rows
                count)))
 
-  (is (not= (-> (mocks/mock-session) (sut/fetch-search {:limit 1}) .values :rows first)
-            (-> (mocks/mock-session) (sut/fetch-search {:limit 1 :offset 1}) .values :rows first))))
+  (is (not= (-> (mocks/mock-session) (sut/fetch-search {:limit 1}) p/->clj :rows first)
+            (-> (mocks/mock-session) (sut/fetch-search {:limit 1 :offset 1}) p/->clj :rows first))))
 
 (deftest batch-search
   (is (= 10

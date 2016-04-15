@@ -1,25 +1,26 @@
 (ns crets.type-extensions-test
   (:require [clojure.test :refer :all]
             [crets.test-mocks :as mocks]
+            [crets.protocols :as p]
             [crets.type-extensions :as sut]))
 
 (deftest rets-metadata-extended-with-protocols
-  (is (satisfies? sut/IValues
+  (is (satisfies? p/Interop
                   mocks/default-metadata))
-  (is (satisfies? sut/ICommonMetadata
+  (is (satisfies? p/ICommonMetadata
                   mocks/default-metadata)))
 
 (deftest classes-protocol-fn
   (is (= "Residential"
          (-> mocks/default-metadata
-             (sut/classes "Property")
+             (p/classes "Property")
              first
              :id))))
 
 (deftest lookups-protocol-fn
   (is (= "AR"
          (-> mocks/compact-metadata
-             (sut/lookups "Property")
+             (p/lookups "Property")
              first
              :id))))
 
@@ -31,21 +32,21 @@
          (sut/resolve-lookup mocks/compact-metadata "Property" "RES" "H_SCHOOL" "300"))))
 
 (deftest metadata-to-minimal-schema
-  (is (satisfies? sut/ICommonMetadata
+  (is (satisfies? p/ICommonMetadata
                   (sut/metadata->resource-metadata mocks/default-metadata "Property"))))
 
 (deftest rets-search-result-extended-with-protocol
-  (is (satisfies? sut/IValues
+  (is (satisfies? p/Interop
                   mocks/search-result)))
 
 (deftest search-result-values 
  (is (= #{"BROKER", "LP", "STNAME", "STATUS", "SQFT", "VEW", "LN", "AGENT_ID", "URL",
           "IF", "LTYP", "AR", "ZIP_CODE", "LD", "E_SCHOOL", "M_SCHOOL", "H_SCHOOL", "EF"}
          (-> mocks/search-result
-             sut/values
+             p/->clj
              :column-names
              set)))
 
   (is (seq?
-       (:rows (sut/values mocks/search-result)))))
+       (:rows (p/->clj mocks/search-result)))))
 

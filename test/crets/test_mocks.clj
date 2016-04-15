@@ -1,6 +1,6 @@
 (ns crets.test-mocks
   (:require[clojure.string :as str]
-            [crets.type-extensions :refer [IValues]]
+            [crets.protocols :as p]
             [crets.utils :as utils]))
 
 (def default-metadata (utils/resource->metadata "test/metadata.xml" false))
@@ -33,7 +33,7 @@
     (when (some #{'search} throws-on)
       (throw (Exception. "Mock exception: search")))
     ;; to support limit & offset, go fishing in the rets SearchRequest
-    ;; then reify IValues with the respectively limited :rows of the sample result
+    ;; then reify Interop with the respectively limited :rows of the sample result
     (let [params (->> req utils/rets-search-request-parameters (into {}))
           {:keys [limit offset] :or {limit Integer/MAX_VALUE offset 0}}
           (->> (select-keys params ["Limit" "Offset"])
@@ -46,8 +46,8 @@
           (when (some #{'getCount} throws-on)
             (throw (Exception. "Mock exception: getCount")))
           (.getCount search-result))
-        IValues
-        (values [_]
+        p/Interop
+        (->clj [_]
           (when (some #{'values} throws-on)
             (throw (Exception. "Mock exception: values")))
           {:column-names (.getColumns search-result)

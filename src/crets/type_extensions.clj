@@ -1,60 +1,56 @@
 (ns crets.type-extensions
   (:require [clojure.edn :as edn]
-            [clojure.pprint :refer [pprint]])
+            [clojure.pprint :refer [pprint]]
+            [crets.protocols :as p])
   (:import org.realtors.rets.client.SearchResult
            org.realtors.rets.common.metadata.Metadata
            [org.realtors.rets.common.metadata.types MClass MLookup MLookupType MObject MResource MSystem MTable]))
 
-;; IValues
-
-(defprotocol IValues
-  (values [obj]))
-
-(extend-protocol IValues
+(extend-protocol p/Interop
   Metadata
-  (values [obj]
-    {:system (values (.getSystem obj))})
+  (->clj [obj]
+    {:system (p/->clj (.getSystem obj))})
 
   MSystem
-  (values [obj]
-    {:resources (map values (.getMResources obj))})
+  (->clj [obj]
+    {:resources (map p/->clj (.getMResources obj))})
 
   MResource
-  (values [obj]
+  (->clj [obj]
     {:id            (.getId obj)
      :resource-id   (.getResourceID obj)
      :standard-name (.getStandardName obj)
      :visible-name  (.getVisibleName obj)
      :description   (.getDescription obj)
      :key-field     (.getKeyField obj)
-     :lookups       (map values (.getMLookups obj))
-     :classes       (map values (.getMClasses obj))
-     :objects       (map values (.getMObjects obj))})
+     :lookups       (map p/->clj (.getMLookups obj))
+     :classes       (map p/->clj (.getMClasses obj))
+     :objects       (map p/->clj (.getMObjects obj))})
 
   MLookup
-  (values [obj]
+  (->clj [obj]
     {:id           (.getId obj)
      :lookup-name  (.getLookupName obj)
      :visible-name (.getVisibleName obj)
-     :lookup-types (map values (.getMLookupTypes obj))})
+     :lookup-types (map p/->clj (.getMLookupTypes obj))})
 
   MLookupType
-  (values [obj]
+  (->clj [obj]
     {:id          (.getId obj)
      :long-value  (.getLongValue obj)
      :short-value (.getShortValue obj)
      :value       (.getValue obj)})
 
   MClass
-  (values [obj]
+  (->clj [obj]
     {:id            (.getId obj)
      :class-name    (.getClassName obj)
      :standard-name (.getStandardName obj)
      :description   (.getDescription obj)
-     :tables        (map values (.getMTables obj))})
+     :tables        (map p/->clj (.getMTables obj))})
 
   MTable
-  (values [obj]
+  (->clj [obj]
     {:id               (.getId obj)
      :system-name      (.getSystemName obj)
      :long-name        (.getLongName obj)
@@ -69,7 +65,7 @@
      :units            (.getUnits obj)})
 
   MObject
-  (values [obj]
+  (->clj [obj]
     {:id            (.getId obj)
      :object-type   (.getObjectType obj)
      :mime-type     (.getMIMEType obj)
@@ -78,23 +74,19 @@
      :description   (.getDescription obj)})
 
   SearchResult
-  (values [obj]
+  (->clj [obj]
     {:column-names (.getColumns obj)
      :rows         (iterator-seq (.iterator obj))}))
 
 
 ;; ISchema
 
-(defprotocol ICommonMetadata
-  (classes [this resource-id])
-  (lookups [this resource-id]))
-
 (defn- resource [metadata resource-id]
-  (->> metadata values :system :resources
+  (->> metadata p/->clj :system :resources
        (some #(when (= resource-id (:id %)) %))))
 
 (extend-type Metadata
-  ICommonMetadata
+  p/ICommonMetadata
   (classes [obj resource-id]
     (:classes (resource obj resource-id)))
 
@@ -102,7 +94,7 @@
     (:lookups (resource obj resource-id))))
 
 (defrecord ResourceMetadata [id lookups classes key-field]
-  ICommonMetadata
+  p/ICommonMetadata
   (classes [_ _]
     classes)
 
@@ -120,7 +112,7 @@
 ;; helpers
 
 (defn fields [schema resource-id, class-id]
-  (->> (classes schema resource-id)
+  (->> (p/classes schema resource-id)
        (some #(when (= class-id (:id %)) %))
        :tables))
 
@@ -129,7 +121,7 @@
        (some #(when (= field-id (:id %)) %))))
 
 (defn lookup [schema resource-id lookup-name]
-  (->> (lookups schema resource-id)
+  (->> (p/lookups schema resource-id)
        (some #(when (= (:id %) lookup-name) %))))
 
 (defn resolve-lookup [schema resource-id class-id field-id lookup-val]

@@ -3,7 +3,8 @@
             [clj-time.format :as timef]
             [clojure.edn :as edn]
             [clojure.string :as str]
-            [crets.type-extensions :as ext]))
+            [crets.type-extensions :as ext]
+            [crets.protocols :as p]))
 
 (defn field-value-fn [f]
   (fn [[k v]] [k ((f k) v)]))
@@ -21,7 +22,7 @@
   ([search-result]
    (search-result->fields (map identity) search-result))
   ([xf search-result]
-   (let [{:keys [column-names rows]} (ext/values search-result)]
+   (let [{:keys [column-names rows]} (p/->clj search-result)]
      (map #(into [] xf (map vector column-names %)) rows))))
 
 (def default-type-converters
@@ -53,7 +54,7 @@
 
 
 (defn field-lookup-resolver [{:keys [resource-id class-id]} schema]
-  (let [lookups (ext/lookups schema resource-id)
+  (let [lookups (p/lookups schema resource-id)
         fields (ext/fields schema resource-id class-id)
         resolver (memoize
                   (fn [field-id]

@@ -1,6 +1,7 @@
 (ns crets.gen-schema
   (:require [crets
              [transform :as t]
+             [protocols :as p]
              [type-extensions :as ext]]
             [schema.core :as s]))
 
@@ -25,7 +26,7 @@
    (stype field)])
 
 (defn schema [metadata resource-id class-id]
-  (->> (ext/classes metadata resource-id)
+  (->> (p/classes metadata resource-id)
        (some #(when (= class-id (:id %)) %))
        :tables
        (map key+stype)
